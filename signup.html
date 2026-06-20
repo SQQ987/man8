@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MAN8台球 · 挑战赛报名</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f5f0eb;font-family:'Noto Sans SC',-apple-system,sans-serif;padding:12px;display:flex;justify-content:center}
+.page{max-width:420px;width:100%;padding-bottom:30px}
+.header{background:linear-gradient(135deg,#1a1a4e,#2a2a7e);border-radius:18px 18px 0 0;padding:24px 18px 18px;text-align:center;position:relative;overflow:hidden}
+.htag{display:inline-block;background:rgba(255,215,0,.15);border:1px solid rgba(255,215,0,.3);color:#ffd700;padding:4px 16px;border-radius:6px;font-size:12px;font-weight:700;margin-bottom:10px}
+.htitle{font-size:26px;font-weight:900;color:#fff;line-height:1.2}
+.htitle .g{color:#ffd700}
+.hsub{font-size:13px;color:rgba(255,255,255,.6);margin-top:6px}
+.info-card{background:#fff;border-radius:0 0 16px 16px;padding:18px;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.04);border:1px solid #eee;border-top:none}
+.info-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f5f5f5}
+.info-row:last-child{border:none}
+.info-row .i-icon{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px}
+.info-row .i-icon.gold{background:#fff8e0}
+.info-row .i-icon.blue{background:#e8f0ff}
+.info-row .i-icon.green{background:#e8ffe8}
+.info-row .i-icon.red{background:#ffe8e8}
+.info-row .i-t{flex:1}
+.info-row .i-t .i-t1{font-size:13px;font-weight:700;color:#333}
+.info-row .i-t .i-t2{font-size:11px;color:#888;margin-top:2px}
+.prize-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:14px 0}
+.prize-item{background:#f8faff;border-radius:10px;padding:12px 6px;text-align:center;border:1px solid #e8f0fe}
+.prize-item.gold{background:#fffbe8;border-color:#ffd700}
+.prize-item .p-icon{font-size:24px;margin-bottom:4px}
+.prize-item .p-label{font-size:11px;color:#666}
+.prize-item .p-val{font-size:15px;font-weight:900;color:#1a1a4e;margin-top:2px}
+.form-card{background:#fff;border-radius:16px;padding:20px 18px;margin-bottom:14px;box-shadow:0 2px 12px rgba(0,0,0,.04);border:1px solid #eee}
+.form-card .f-title{font-size:16px;font-weight:900;color:#1a1a4e;margin-bottom:4px;letter-spacing:1px}
+.form-card .f-sub{font-size:11px;color:#888;margin-bottom:16px}
+.form-group{margin-bottom:14px}
+.form-group label{display:block;font-size:12px;font-weight:700;color:#555;margin-bottom:5px}
+.form-group input,.form-group select{width:100%;padding:12px 14px;border:2px solid #e0e0e0;border-radius:10px;font-size:15px;font-family:inherit;outline:none;transition:.2s;background:#fafafa}
+.form-group input:focus,.form-group select:focus{border-color:#1a1a4e;background:#fff;box-shadow:0 0 0 3px rgba(26,26,78,.05)}
+.form-group .hint{font-size:10px;color:#999;margin-top:4px}
+.submit-btn{width:100%;background:linear-gradient(135deg,#ff6b00,#ff9500);color:#fff;border:none;border-radius:12px;padding:16px;font-size:17px;font-weight:900;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 16px rgba(255,100,0,.2);transition:.2s;font-family:inherit}
+.submit-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,100,0,.3)}
+.footer-info{background:#fff;border-radius:16px;padding:18px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.04);border:1px solid #eee}
+.footer-info .ftitle{font-size:13px;font-weight:700;color:#333;margin-bottom:6px}
+.footer-info .fphone{font-size:20px;font-weight:900;color:#ff6b00;letter-spacing:3px;margin-bottom:4px}
+.footer-info .faddr{font-size:11px;color:#888;line-height:1.6}
+.footer-info .flink{font-size:10px;color:#999;margin-top:8px}
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:100;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.show{display:flex}
+.modal-box{background:#fff;border-radius:20px;padding:30px 24px;max-width:360px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.15)}
+.modal-box .m-icon{font-size:56px;margin-bottom:12px}
+.modal-box .m-title{font-size:20px;font-weight:900;color:#1a1a4e;margin-bottom:6px}
+.modal-box .m-desc{font-size:13px;color:#666;line-height:1.6;margin-bottom:20px}
+.modal-box .m-btn{background:#1a1a4e;color:#fff;border:none;border-radius:10px;padding:12px 30px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
+.signup-list{display:none;margin-top:14px;background:#fff;border-radius:16px;padding:18px;border:1px solid #eee}
+.signup-list.show{display:block}
+.signup-list .s-title{font-size:14px;font-weight:700;color:#1a1a4e;margin-bottom:10px}
+.signup-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:12px;color:#555}
+.signup-item:last-child{border:none}
+.signup-item .s-idx{width:24px;height:24px;border-radius:50%;background:#e8f0ff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1a1a4e;flex-shrink:0}
+.signup-item .s-name{font-weight:700;color:#333;min-width:60px}
+.signup-item .s-other{color:#888;flex:1;text-align:right;font-size:11px}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="header">
+<div class="htag">🏆 MAN8 挑战赛</div>
+<div class="htitle">大学生<span class="g">台球挑战赛</span></div>
+<div class="hsub">📅 每周五晚 20:00 · 等你来战</div>
+</div>
+
+<div class="info-card">
+<div class="info-row"><div class="i-icon gold">📅</div><div class="i-t"><div class="i-t1">每周五晚 20:00</div><div class="i-t2">准时开打，请提前10分钟到场签到</div></div></div>
+<div class="info-row"><div class="i-icon blue">📍</div><div class="i-t"><div class="i-t1">MAN8台球俱乐部</div><div class="i-t2">郑州大学城XX路（XX大学南门对面）</div></div></div>
+<div class="info-row"><div class="i-icon green">🎯</div><div class="i-t"><div class="i-t1">比赛规则</div><div class="i-t2">双败淘汰制 · 抢3局 · 中式八球</div></div></div>
+<div class="info-row"><div class="i-icon red">🎫</div><div class="i-t"><div class="i-t1">报名费</div><div class="i-t2">免费（凭学生证） · 非学生10元/人</div></div></div>
+</div>
+
+<div class="prize-grid">
+<div class="prize-item gold"><div class="p-icon">🏆</div><div class="p-label">🏅 冠军</div><div class="p-val">免单+¥100</div></div>
+<div class="prize-item"><div class="p-icon">🥈</div><div class="p-label">🥈 亚军</div><div class="p-val">免单+饮料</div></div>
+<div class="prize-item"><div class="p-icon">🥉</div><div class="p-label">🥉 季军</div><div class="p-val">畅打1天</div></div>
+</div>
+
+<div class="form-card">
+<div class="f-title">📝 报名参赛</div>
+<div class="f-sub">填写信息即可报名本周五的比赛</div>
+<div class="form-group"><label>👤 姓名 *</label><input type="text" id="name" placeholder="请输入你的姓名" maxlength="20"></div>
+<div class="form-group"><label>📞 手机号 *</label><input type="tel" id="phone" placeholder="请输入手机号" maxlength="11"></div>
+<div class="form-group"><label>🎓 是否为学生</label><select id="isStudent"><option value="yes">是（凭学生证免费参赛）</option><option value="no">否（报名费10元）</option></select></div>
+<div class="form-group"><label>🎯 水平自评</label><select id="level"><option value="新手">新手（刚接触）</option><option value="入门">入门（会基本规则）</option><option value="进阶">进阶（能稳定进球）</option><option value="高手">高手（一杆清台）</option><option value="大神">大神（业余选手级）</option></select></div>
+<button class="submit-btn" onclick="submitSignup()">🔥 立即报名</button>
+</div>
+
+<div class="signup-list" id="signupList">
+<div class="s-title">👥 本周已报名（<span id="countNum">0</span>人）</div>
+<div id="signupItems"></div>
+</div>
+
+<div class="footer-info">
+<div class="ftitle">📞 联系报名</div>
+<div class="fphone">138-0000-0000</div>
+<div class="faddr">📍 郑州大学城XX路（XX大学南门对面）<br>⏰ 营业时间：10:00 — 凌晨01:00</div>
+<div class="flink"><a href="https://sqq987.github.io/man8/" style="color:#1a1a4e">🏠 返回主页</a></div>
+</div>
+
+</div>
+
+<div class="modal-overlay" id="successModal">
+<div class="modal-box">
+<div class="m-icon">🎉</div>
+<div class="m-title">报名成功！</div>
+<div class="m-desc">比赛时间：<strong>本周五 晚20:00</strong><br>地点：MAN8台球俱乐部<br>请提前10分钟到场签到 🙌</div>
+<button class="m-btn" onclick="closeModal()">好的，我知道了</button>
+</div>
+</div>
+
+<script>
+let signups = JSON.parse(localStorage.getItem('man8_signups') || '[]');
+function renderSignups() {
+const list=document.getElementById('signupList'),items=document.getElementById('signupItems'),count=document.getElementById('countNum');
+if(signups.length>0)list.classList.add('show');else{list.classList.remove('show');return}
+count.textContent=signups.length;
+items.innerHTML=signups.map((s,i)=>`<div class="signup-item"><div class="s-idx">${i+1}</div><div class="s-name">${s.name}</div><div class="s-other">${s.isStudent==='yes'?'🎓':''} ${s.level}</div></div>`).join('');
+}
+function submitSignup(){
+const name=document.getElementById('name').value.trim(),phone=document.getElementById('phone').value.trim(),isStudent=document.getElementById('isStudent').value,level=document.getElementById('level').value;
+if(!name){alert('请输入姓名');return}
+if(!phone||phone.length<11){alert('请输入正确的手机号');return}
+signups.push({name,phone,isStudent,level,time:new Date().toLocaleString()});
+localStorage.setItem('man8_signups',JSON.stringify(signups));
+document.getElementById('name').value='';document.getElementById('phone').value='';
+renderSignups();document.getElementById('successModal').classList.add('show');
+}
+function closeModal(){document.getElementById('successModal').classList.remove('show')}
+renderSignups();
+</script>
+</body>
+</html>
