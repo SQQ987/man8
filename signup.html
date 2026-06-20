@@ -38,14 +38,18 @@ body{background:#f5f0eb;font-family:'Noto Sans SC',-apple-system,sans-serif;padd
 .form-group label{display:block;font-size:12px;font-weight:700;color:#555;margin-bottom:5px}
 .form-group input,.form-group select{width:100%;padding:12px 14px;border:2px solid #e0e0e0;border-radius:10px;font-size:15px;font-family:inherit;outline:none;transition:.2s;background:#fafafa}
 .form-group input:focus,.form-group select:focus{border-color:#1a1a4e;background:#fff;box-shadow:0 0 0 3px rgba(26,26,78,.05)}
-.form-group .hint{font-size:10px;color:#999;margin-top:4px}
 .submit-btn{width:100%;background:linear-gradient(135deg,#ff6b00,#ff9500);color:#fff;border:none;border-radius:12px;padding:16px;font-size:17px;font-weight:900;letter-spacing:2px;cursor:pointer;box-shadow:0 4px 16px rgba(255,100,0,.2);transition:.2s;font-family:inherit}
 .submit-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(255,100,0,.3)}
+.qr-section{background:#fff;border-radius:16px;padding:18px;margin-bottom:14px;text-align:center;border:1px solid #eee}
+.qr-section .qr-title{font-size:13px;font-weight:700;color:#333;margin-bottom:10px}
+.qr-section .qr-img{width:160px;height:160px;margin:0 auto;display:block;border-radius:8px}
+.qr-section .qr-hint{font-size:10px;color:#999;margin-top:6px;line-height:1.5}
 .footer-info{background:#fff;border-radius:16px;padding:18px;text-align:center;box-shadow:0 2px 12px rgba(0,0,0,.04);border:1px solid #eee}
 .footer-info .ftitle{font-size:13px;font-weight:700;color:#333;margin-bottom:6px}
 .footer-info .fphone{font-size:20px;font-weight:900;color:#ff6b00;letter-spacing:3px;margin-bottom:4px}
 .footer-info .faddr{font-size:11px;color:#888;line-height:1.6}
-.footer-info .flink{font-size:10px;color:#999;margin-top:8px}
+.footer-info .flink{font-size:10px;color:#999;margin-top:8px;display:flex;justify-content:center;gap:14px}
+.footer-info .flink a{color:#1a1a4e;text-decoration:none}
 .modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:100;align-items:center;justify-content:center;padding:20px}
 .modal-overlay.show{display:flex}
 .modal-box{background:#fff;border-radius:20px;padding:30px 24px;max-width:360px;width:100%;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,.15)}
@@ -53,14 +57,6 @@ body{background:#f5f0eb;font-family:'Noto Sans SC',-apple-system,sans-serif;padd
 .modal-box .m-title{font-size:20px;font-weight:900;color:#1a1a4e;margin-bottom:6px}
 .modal-box .m-desc{font-size:13px;color:#666;line-height:1.6;margin-bottom:20px}
 .modal-box .m-btn{background:#1a1a4e;color:#fff;border:none;border-radius:10px;padding:12px 30px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit}
-.signup-list{display:none;margin-top:14px;background:#fff;border-radius:16px;padding:18px;border:1px solid #eee}
-.signup-list.show{display:block}
-.signup-list .s-title{font-size:14px;font-weight:700;color:#1a1a4e;margin-bottom:10px}
-.signup-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f5f5f5;font-size:12px;color:#555}
-.signup-item:last-child{border:none}
-.signup-item .s-idx{width:24px;height:24px;border-radius:50%;background:#e8f0ff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#1a1a4e;flex-shrink:0}
-.signup-item .s-name{font-weight:700;color:#333;min-width:60px}
-.signup-item .s-other{color:#888;flex:1;text-align:right;font-size:11px}
 </style>
 </head>
 <body>
@@ -95,16 +91,21 @@ body{background:#f5f0eb;font-family:'Noto Sans SC',-apple-system,sans-serif;padd
 <button class="submit-btn" onclick="submitSignup()">🔥 立即报名</button>
 </div>
 
-<div class="signup-list" id="signupList">
-<div class="s-title">👥 本周已报名（<span id="countNum">0</span>人）</div>
-<div id="signupItems"></div>
+<!-- 二维码区域 -->
+<div class="qr-section">
+<div class="qr-title">📱 扫码报名 · 转发给同学</div>
+<img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://sqq987.github.io/man8/signup.html&bgcolor=ffffff&color=1a1a4e" alt="扫码报名">
+<div class="qr-hint">微信扫一扫 · 直接进入报名页面<br>转发给同学，一起报名参赛！</div>
 </div>
 
 <div class="footer-info">
 <div class="ftitle">📞 联系报名</div>
 <div class="fphone">138-0000-0000</div>
 <div class="faddr">📍 郑州大学城XX路（XX大学南门对面）<br>⏰ 营业时间：10:00 — 凌晨01:00</div>
-<div class="flink"><a href="https://sqq987.github.io/man8/" style="color:#1a1a4e">🏠 返回主页</a></div>
+<div class="flink">
+<a href="https://sqq987.github.io/man8/">🏠 主页</a>
+<a href="admin.html" style="color:#999!important">🔐 管理</a>
+</div>
 </div>
 
 </div>
@@ -120,12 +121,6 @@ body{background:#f5f0eb;font-family:'Noto Sans SC',-apple-system,sans-serif;padd
 
 <script>
 let signups = JSON.parse(localStorage.getItem('man8_signups') || '[]');
-function renderSignups() {
-const list=document.getElementById('signupList'),items=document.getElementById('signupItems'),count=document.getElementById('countNum');
-if(signups.length>0)list.classList.add('show');else{list.classList.remove('show');return}
-count.textContent=signups.length;
-items.innerHTML=signups.map((s,i)=>`<div class="signup-item"><div class="s-idx">${i+1}</div><div class="s-name">${s.name}</div><div class="s-other">${s.isStudent==='yes'?'🎓':''} ${s.level}</div></div>`).join('');
-}
 function submitSignup(){
 const name=document.getElementById('name').value.trim(),phone=document.getElementById('phone').value.trim(),isStudent=document.getElementById('isStudent').value,level=document.getElementById('level').value;
 if(!name){alert('请输入姓名');return}
@@ -133,10 +128,9 @@ if(!phone||phone.length<11){alert('请输入正确的手机号');return}
 signups.push({name,phone,isStudent,level,time:new Date().toLocaleString()});
 localStorage.setItem('man8_signups',JSON.stringify(signups));
 document.getElementById('name').value='';document.getElementById('phone').value='';
-renderSignups();document.getElementById('successModal').classList.add('show');
+document.getElementById('successModal').classList.add('show');
 }
 function closeModal(){document.getElementById('successModal').classList.remove('show')}
-renderSignups();
 </script>
 </body>
 </html>

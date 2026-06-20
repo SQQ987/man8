@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MAN8 · 管理后台</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f0f2f5;font-family:'Noto Sans SC',-apple-system,sans-serif;padding:16px;display:flex;justify-content:center}
+.page{max-width:500px;width:100%}
+
+/* 登录页 */
+.login-box{background:#fff;border-radius:20px;padding:40px 24px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.06);margin-top:60px}
+.login-box .l-icon{font-size:48px;margin-bottom:12px}
+.login-box .l-title{font-size:20px;font-weight:900;color:#1a1a4e;margin-bottom:6px}
+.login-box .l-sub{font-size:12px;color:#888;margin-bottom:24px}
+.login-box input{width:100%;padding:14px;border:2px solid #e0e0e0;border-radius:12px;font-size:16px;text-align:center;outline:none;margin-bottom:14px;font-family:inherit;letter-spacing:4px}
+.login-box input:focus{border-color:#1a1a4e;box-shadow:0 0 0 3px rgba(26,26,78,.05)}
+.login-box button{width:100%;background:linear-gradient(135deg,#1a1a4e,#2a2a7e);color:#fff;border:none;border-radius:12px;padding:14px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+.login-box .login-error{color:#ff4444;font-size:12px;margin-top:10px;display:none}
+
+/* 管理页 */
+.admin-header{background:linear-gradient(135deg,#1a1a4e,#2a2a7e);border-radius:16px;padding:20px;text-align:center;margin-bottom:16px}
+.admin-header .ah-title{font-size:22px;font-weight:900;color:#fff}
+.admin-header .ah-title .g{color:#ffd700}
+.admin-header .ah-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:4px}
+.admin-header .ah-logout{color:rgba(255,255,255,.4);font-size:11px;margin-top:8px;cursor:pointer;text-decoration:underline}
+
+.stat-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px}
+.stat-item{background:#fff;border-radius:12px;padding:14px;text-align:center;border:1px solid #eee}
+.stat-item .s-num{font-size:28px;font-weight:900;color:#ff6b00}
+.stat-item .s-label{font-size:11px;color:#888;margin-top:2px}
+
+.actions{display:flex;gap:8px;margin-bottom:16px}
+.actions button{flex:1;padding:12px;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+.actions .btn-export{background:#e8f0ff;color:#1a1a4e}
+.actions .btn-clear{background:#ffe8e8;color:#ff4444}
+
+.table-card{background:#fff;border-radius:16px;overflow:hidden;border:1px solid #eee}
+.table-card .tc-title{font-size:14px;font-weight:700;color:#333;padding:16px 16px 8px;border-bottom:1px solid #f5f5f5;display:flex;justify-content:space-between;align-items:center}
+.table-card .tc-title span{color:#ff6b00;font-size:20px}
+
+table{width:100%;border-collapse:collapse}
+thead th{background:#f8faff;padding:10px 12px;font-size:11px;color:#888;font-weight:700;text-align:left;border-bottom:2px solid #e8f0fe}
+tbody td{padding:10px 12px;font-size:12px;color:#555;border-bottom:1px solid #f5f5f5}
+tbody tr:hover{background:#fafafa}
+tbody tr:last-child td{border:none}
+.empty-row td{text-align:center;padding:30px;color:#bbb;font-size:13px}
+
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700}
+.badge.student{background:#e8ffe8;color:#228b22}
+.badge.non-student{background:#ffe8e8;color:#ff4444}
+
+.hidden{display:none}
+
+.admin-footer{text-align:center;padding:16px;font-size:10px;color:#bbb}
+.admin-footer a{color:#888;text-decoration:none}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ===== 登录界面 ===== -->
+<div class="login-box" id="loginBox">
+<div class="l-icon">🔐</div>
+<div class="l-title">MAN8 管理后台</div>
+<div class="l-sub">请输入管理密码查看报名记录</div>
+<input type="password" id="pwdInput" placeholder="请输入密码" maxlength="20" onkeydown="if(event.key==='Enter')checkPwd()">
+<button onclick="checkPwd()">进入后台</button>
+<div class="login-error" id="loginError">❌ 密码错误，请重试</div>
+</div>
+
+<!-- ===== 管理界面（登录后显示） ===== -->
+<div class="hidden" id="adminPanel">
+
+<div class="admin-header">
+<div class="ah-title">MAN8 <span class="g">管理后台</span></div>
+<div class="ah-sub">📊 台球挑战赛 · 报名管理</div>
+<div class="ah-logout" onclick="logout()">退出登录</div>
+</div>
+
+<div class="stat-row">
+<div class="stat-item"><div class="s-num" id="totalCount">0</div><div class="s-label">报名总人数</div></div>
+<div class="stat-item"><div class="s-num" id="studentCount">0</div><div class="s-label">学生报名</div></div>
+<div class="stat-item"><div class="s-num" id="todayCount">0</div><div class="s-label">今日新增</div></div>
+</div>
+
+<div class="actions">
+<button class="btn-export" onclick="exportData()">📥 导出Excel</button>
+<button class="btn-clear" onclick="clearAll()">🗑️ 清空数据</button>
+</div>
+
+<div class="table-card">
+<div class="tc-title">📋 报名列表 <span id="listCount">0</span></div>
+<table>
+<thead><tr><th>#</th><th>姓名</th><th>手机号</th><th>身份</th><th>水平</th></tr></thead>
+<tbody id="tableBody">
+<tr class="empty-row"><td colspan="5">暂无报名记录</td></tr>
+</tbody>
+</table>
+</div>
+
+</div>
+
+<div class="admin-footer">
+<a href="https://sqq987.github.io/man8/">🏠 返回主页</a>
+</div>
+
+</div>
+
+<script>
+const ADMIN_PWD = "5418741";
+
+function checkPwd() {
+    const pwd = document.getElementById('pwdInput').value;
+    if (pwd === ADMIN_PWD) {
+        document.getElementById('loginBox').classList.add('hidden');
+        document.getElementById('adminPanel').classList.remove('hidden');
+        renderData();
+    } else {
+        document.getElementById('loginError').style.display = 'block';
+        document.getElementById('pwdInput').value = '';
+    }
+}
+
+function logout() {
+    document.getElementById('adminPanel').classList.add('hidden');
+    document.getElementById('loginBox').classList.remove('hidden');
+    document.getElementById('pwdInput').value = '';
+    document.getElementById('loginError').style.display = 'none';
+}
+
+function getData() {
+    try {
+        return JSON.parse(localStorage.getItem('man8_signups') || '[]');
+    } catch(e) {
+        return [];
+    }
+}
+
+function renderData() {
+    const data = getData();
+    const tbody = document.getElementById('tableBody');
+    const total = document.getElementById('totalCount');
+    const students = document.getElementById('studentCount');
+    const today = document.getElementById('todayCount');
+    const listCount = document.getElementById('listCount');
+    
+    total.textContent = data.length;
+    listCount.textContent = data.length;
+    
+    const stuCount = data.filter(s => s.isStudent === 'yes').length;
+    students.textContent = stuCount;
+    
+    const todayStr = new Date().toLocaleDateString();
+    const todayCount = data.filter(s => s.time && s.time.includes(todayStr)).length;
+    today.textContent = todayCount || '0';
+    
+    if (data.length === 0) {
+        tbody.innerHTML = '<tr class="empty-row"><td colspan="5">暂无报名记录</td></tr>';
+        return;
+    }
+    
+    tbody.innerHTML = data.map((s, i) => `
+        <tr>
+            <td style="font-weight:700;color:#999">${i+1}</td>
+            <td style="font-weight:700;color:#333">${s.name || '--'}</td>
+            <td>${s.phone || '--'}</td>
+            <td><span class="badge ${s.isStudent === 'yes' ? 'student' : 'non-student'}">${s.isStudent === 'yes' ? '🎓 学生' : '非学生'}</span></td>
+            <td style="color:#888">${s.level || '--'}</td>
+        </tr>
+    `).join('');
+}
+
+function exportData() {
+    const data = getData();
+    if (data.length === 0) { alert('暂无数据可导出'); return; }
+    
+    let csv = '序号,姓名,手机号,身份,水平,报名时间\n';
+    data.forEach((s, i) => {
+        csv += `${i+1},${s.name},${s.phone},${s.isStudent==='yes'?'学生':'非学生'},${s.level},${s.time}\n`;
+    });
+    
+    const blob = new Blob(['\uFEFF' + csv], {type: 'text/csv;charset=utf-8;'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `MAN8报名记录_${new Date().toLocaleDateString()}.csv`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+}
+
+function clearAll() {
+    if (!confirm('⚠️ 确定要清空所有报名数据吗？此操作不可恢复！')) return;
+    if (!confirm('再次确认：真的要清空 ' + getData().length + ' 条报名记录吗？')) return;
+    localStorage.removeItem('man8_signups');
+    renderData();
+}
+
+// 检查URL是否有 ?pwd=xxx 参数，方便直接打开
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('pwd') === ADMIN_PWD) {
+    document.getElementById('loginBox').classList.add('hidden');
+    document.getElementById('adminPanel').classList.remove('hidden');
+    renderData();
+}
+</script>
+</body>
+</html>
