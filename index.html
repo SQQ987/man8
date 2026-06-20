@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MAN8台球俱乐部</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@700;900&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#f5f0eb;font-family:'Noto Sans SC',-apple-system,sans-serif;padding:12px;display:flex;justify-content:center}
+
+.poster{
+  max-width:400px;width:100%;
+  background:#fff;
+  border-radius:20px;padding:0 0 20px;position:relative;overflow:hidden;
+  box-shadow:0 8px 40px rgba(0,0,0,.08);
+}
+
+/* ===== TOP——亮橙+深蓝撞色 ===== */
+.banner{
+  background:linear-gradient(135deg,#ff6b00 0%,#ff9500 50%,#ffaa00 100%);
+  padding:22px 16px 18px;text-align:center;position:relative;
+  border-bottom:6px solid #1a1a4e;
+}
+.ibadge{
+  display:inline-block;background:#1a1a4e;color:#ffd700;
+  padding:6px 20px;border-radius:20px;font-size:14px;font-weight:900;
+  margin-bottom:10px;box-shadow:0 3px 10px rgba(0,0,0,.15);
+}
+.bn-title{font-size:38px;font-weight:900;color:#1a1a4e;line-height:1.1;text-shadow:none}
+.bn-title .g{color:#1a1a4e}
+.bn-sub{font-size:14px;color:#fff;margin-top:4px;letter-spacing:4px;font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,.1)}
+.phone-box{margin-top:14px}
+.phone-box .pn{
+  font-size:34px;font-weight:900;color:#1a1a4e;
+  letter-spacing:6px;display:inline-block;padding:6px 24px;border-radius:12px;
+  background:#ffd700;box-shadow:0 4px 16px rgba(255,200,0,.3);
+}
+.phone-box .pl{font-size:10px;color:#fff;letter-spacing:2px;margin-bottom:3px;opacity:.7}
+
+/* ===== 深蓝教官条 ===== */
+.itag{
+  margin:0 0 0;padding:14px 12px;text-align:center;
+  background:#1a1a4e;box-shadow:0 3px 12px rgba(26,26,78,.2);
+}
+.itag .itm{font-size:18px;font-weight:900;color:#ffd700}
+.itag .its{font-size:12px;color:rgba(255,255,255,.6);margin-top:3px}
+
+/* ===== 区块标题 ===== */
+.sh{display:flex;align-items:center;gap:10px;padding:14px 14px 6px}
+.sh .sht{font-size:14px;font-weight:900;color:#ff6b00;white-space:nowrap;letter-spacing:2px}
+.sh .shl{flex:1;height:4px;background:#ff6b00;border-radius:2px}
+
+/* ===== PRICES ===== */
+.pr{display:flex;gap:10px;padding:0 14px}
+.pb{flex:1;padding:16px 8px;text-align:center;border-radius:14px}
+.pb.std{background:#1a1a4e;color:#fff}
+.pb.std .pnum{color:#ffd700}
+.pb.std .pl{color:#fff}
+.pb.std .pd{color:rgba(255,255,255,.5)}
+.pb.feat{background:linear-gradient(135deg,#ff6b00,#ff9500);color:#fff;position:relative;border:2px solid #1a1a4e}
+.pb.feat .pnum{color:#fff}
+.pb.feat .pl{color:#fff}
+.pb.feat .pd{color:rgba(255,255,255,.6)}
+.pb.feat::before{content:'🔥 推荐';position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:#1a1a4e;color:#ffd700;font-size:9px;padding:3px 14px;border-radius:8px;font-weight:900;box-shadow:0 2px 6px rgba(0,0,0,.1)}
+.pb .pnum{font-size:32px;font-weight:900;line-height:1}
+.pb .punit{font-size:13px;opacity:.6}
+.pb .pl{font-size:14px;font-weight:700;margin-top:4px}
+.pb .pd{font-size:10px;margin-top:2px}
+
+/* ===== TOPUP ===== */
+.tg{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:0 14px}
+.tu{background:#fff;border:2px solid #e0e0e0;border-radius:12px;padding:14px 8px;text-align:center}
+.tu.feat{border-color:#ff6b00;background:#fff8f0}
+.tu .tun{font-size:22px;font-weight:900;color:#ff6b00}
+.tu .tut{font-size:12px;color:#888}
+.tu .tul{font-size:13px;font-weight:700;color:#1a1a4e;margin-top:4px}
+.tu .tus{font-size:9px;color:#888;margin-top:2px}
+
+/* ===== DEALS ===== */
+.ds{display:flex;gap:8px;padding:8px 14px 0}
+.dl{flex:1;border-radius:10px;padding:12px 4px;text-align:center}
+.dl:nth-child(1){background:#1a1a4e}
+.dl:nth-child(2){background:#ff6b00}
+.dl:nth-child(3){background:#1a1a4e}
+.dl:nth-child(4){background:#ff6b00}
+.dl .dn{font-size:18px;font-weight:900;color:#fff}
+.dl .dlbl{font-size:10px;color:rgba(255,255,255,.7);margin-top:2px}
+
+/* ===== FEATURES ===== */
+.fg{padding:6px 14px}
+.fi{display:flex;align-items:center;gap:12px;padding:10px 12px;margin-bottom:6px;border-radius:10px;background:#fff;border:1px solid #eee}
+.fii{width:34px;min-width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;background:#ff6b00;color:#fff}
+.fit{font-size:13px;color:#555;line-height:1.4}
+.fit strong{color:#1a1a4e}
+
+/* ===== CTA ===== */
+.cta{padding:0 14px;margin-top:6px}
+.cta-btn{
+  display:block;background:#1a1a4e;color:#ffd700;
+  font-weight:900;padding:16px;border-radius:14px;
+  font-size:26px;text-align:center;text-decoration:none;
+  letter-spacing:6px;border:2px solid #ffd700;
+}
+.cta-sub{text-align:center;font-size:11px;color:#888;margin-top:6px;line-height:1.6}
+
+/* ===== INFO ===== */
+.info{padding:12px 14px 0}
+.ic{background:#ff6b00;border-radius:12px;padding:14px;text-align:center}
+.ic .iph{font-size:22px;font-weight:900;color:#fff;letter-spacing:4px;margin-bottom:6px}
+.ic .iil{font-size:12px;color:rgba(255,255,255,.7);line-height:1.6}
+
+/* ===== QR ===== */
+.qrs{text-align:center;padding:12px 14px 0}
+.qrb{display:inline-flex;align-items:center;gap:10px;background:#fff;border-radius:12px;padding:10px 16px;border:2px solid #1a1a4e}
+.qrb .qbb{width:48px;height:48px;border-radius:8px;background:#1a1a4e;display:flex;align-items:center;justify-content:center;border:1px dashed rgba(255,255,255,.2);flex-shrink:0;font-size:8px;color:rgba(255,215,0,.5)}
+.qrb .qbt{font-size:11px;color:#555;text-align:left;line-height:1.5}
+.qrb .qbt strong{color:#1a1a4e;font-size:12px}
+
+.ft{text-align:center;padding:10px 14px 0;font-size:9px;color:#bbb;letter-spacing:1px}
+</style>
+</head>
+<body>
+<div class="poster">
+
+<div class="banner">
+<div class="ibadge">👮‍♂️ 学校教官开的</div>
+<div class="bn-title">🎱 <span class="g">MAN8</span></div>
+<div class="bn-title" style="font-size:24px;margin-top:-2px">台球俱乐部</div>
+<div class="bn-sub">🔥 大学城店 · 学生价炸裂 🔥</div>
+<div class="phone-box">
+<div class="pl">📞 预约电话</div>
+<div class="pn">138-0000-0000</div>
+</div>
+</div>
+
+<div class="itag">
+<div class="itm">👮‍♂️ 教官亲自坐镇 · 安全放心有保障</div>
+<div class="its">🎓 凭学生证立享学生价 · 大学门口走两步就到</div>
+</div>
+
+<div class="sh"><span class="sht">🎯 台费价格</span><span class="shl"></span></div>
+<div class="pr">
+<div class="pb std">
+<div class="pnum">15<span class="punit">¥/h</span></div>
+<div class="pl">🎯 标准台</div>
+<div class="pd">球杆·粉笔全包</div>
+</div>
+<div class="pb feat">
+<div class="pnum">20<span class="punit">¥/h</span></div>
+<div class="pl">🏆 乔氏赛台</div>
+<div class="pd">含摆球服务</div>
+</div>
+</div>
+
+<div class="sh"><span class="sht">💰 充值优惠</span><span class="shl"></span></div>
+<div class="tg">
+<div class="tu">
+<div class="tun">50<span class="tut">送10</span></div>
+<div class="tul">🔹 青铜卡</div>
+<div class="tus">到手60元</div>
+</div>
+<div class="tu">
+<div class="tun">100<span class="tut">送30</span></div>
+<div class="tul">🔸 白银卡</div>
+<div class="tus">到手130元</div>
+</div>
+<div class="tu feat">
+<div class="tun">200<span class="tut">送80</span></div>
+<div class="tul">🔥 黄金卡</div>
+<div class="tus">到手280元</div>
+</div>
+<div class="tu feat">
+<div class="tun">500<span class="tut">送250</span></div>
+<div class="tul">👑 钻石卡</div>
+<div class="tus">到手750元</div>
+</div>
+</div>
+
+<div class="sh"><span class="sht">🎁 学生专享</span><span class="shl"></span></div>
+<div class="ds">
+<div class="dl"><div class="dn">¥9.9</div><div class="dlbl">🎉 首次体验</div></div>
+<div class="dl"><div class="dn">¥79</div><div class="dlbl">🎓 学生月卡</div></div>
+<div class="dl"><div class="dn">¥24.9</div><div class="dlbl">👫 双人套餐</div></div>
+<div class="dl"><div class="dn">¥199</div><div class="dlbl">👑 畅打月卡</div></div>
+</div>
+
+<div class="fg">
+<div class="fi"><div class="fii">🎱</div><div class="fit"><strong>星牌·乔氏比赛台</strong> 专业平整，弹性一流</div></div>
+<div class="fi"><div class="fii">🎧</div><div class="fit"><strong>氛围感满分</strong> 蓝牙音响·免费WiFi·空调足·蓝调灯光</div></div>
+<div class="fi"><div class="fii">🍻</div><div class="fit"><strong>平价小卖部</strong> 饮料零食比学校超市还便宜</div></div>
+<div class="fi"><div class="fii">👫</div><div class="fit"><strong>组局群</strong> 扫码进群，随时约球友</div></div>
+</div>
+
+<div class="cta">
+<div class="cta-btn">📞 138-0000-0000</div>
+<div class="cta-sub">转发海报集18👍 → 到店立减5元 &nbsp;|&nbsp; 🎁 首单送1小时体验券</div>
+</div>
+
+<div class="info">
+<div class="ic">
+<div class="iph">📞 138-0000-0000</div>
+<div class="iil">📍 郑州大学城XX路（XX大学南门对面）</div>
+<div class="iil">⏰ 10:00 — 凌晨01:00</div>
+</div>
+</div>
+
+<div class="qrs">
+<div class="qrb">
+<div class="qbb">放码</div>
+<div class="qbt"><strong>扫码进群 · 约球不愁</strong><br>组局 · 比赛 · 福利 · 优惠</div>
+</div>
+</div>
+
+<div class="ft">🎱 MAN8台球俱乐部 · 大学城店 🎱</div>
+</div>
+</body>
+</html>
